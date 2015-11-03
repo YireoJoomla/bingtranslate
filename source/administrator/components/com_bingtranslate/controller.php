@@ -39,9 +39,10 @@ class BingTranslateController extends YireoController
     public function translate()
     {
         // Get the language from request
-        $text = JRequest::getVar('text', null, null, null, JREQUEST_ALLOWRAW);
-        $toLang = JRequest::getCmd('to');
-        $fromLang = JRequest::getCmd('from');
+        $input = JFactory::getApplication()->input;
+        $text = $input->get('text', null, 'raw');
+        $toLang = $input->getCmd('to');
+        $fromLang = $input->getCmd('from');
 
         // Detect JoomFish languages
         if (preg_match('/joomfish([0-9\-]+)/', $toLang)) {
@@ -51,6 +52,7 @@ class BingTranslateController extends YireoController
 
             $db = JFactory::getDBO();
             $db->setQuery('SELECT * FROM #__languages');
+
             $languages = $db->loadObjectList();
             if (!empty($languages)) {
                 foreach ($languages as $language) {

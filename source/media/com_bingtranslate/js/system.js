@@ -1,4 +1,4 @@
-/*
+/**
  * Joomla! component - BingTranslate
  *
  * @author Yireo (info@yireo.com)
