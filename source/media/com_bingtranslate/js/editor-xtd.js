@@ -41,7 +41,7 @@ function doBingTranslate(editor, language, button) {
 
     // Check for TinyMCE
     var useTinyMCE = false;
-    if (tinyMCE) {
+    if (typeof tinyMCE != 'undefined') {
         var tinyMCEEditor = tinyMCE.get(editor);
         if (tinyMCEEditor) {
             var originalText = tinyMCEEditor.getContent();
