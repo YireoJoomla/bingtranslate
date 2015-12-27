@@ -30,6 +30,8 @@ function doBingTranslate(editor, language, button) {
     // Do not continue if no language was detected
     if (language == '' || language == undefined) {
         setBingTranslateError(button, editor);
+
+        console.log('Failed to detect which language to translate to');
         alert('Failed to detect which language to translate to');
         return false;
     }
@@ -43,6 +45,12 @@ function doBingTranslate(editor, language, button) {
     var useTinyMCE = false;
     if (typeof tinyMCE != 'undefined') {
         var tinyMCEEditor = tinyMCE.get(editor);
+        if (tinyMCEEditor) {
+            var originalText = tinyMCEEditor.getContent();
+            var useTinyMCE = true;
+        }
+
+        var tinyMCEEditor = tinyMCE.activeEditor;
         if (tinyMCEEditor) {
             var originalText = tinyMCEEditor.getContent();
             var useTinyMCE = true;

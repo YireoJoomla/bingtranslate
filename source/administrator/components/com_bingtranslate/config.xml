@@ -6,11 +6,21 @@
     		<field name="client_secret" type="text" default="" label="COM_BINGTRANSLATE_FIELD_CLIENT_SECRET" description="COM_BINGTRANSLATE_FIELD_CLIENT_SECRET_DESC" size="64" />
         </fieldset>
         <fieldset name="advanced">
-            <field name="load_jquery" type="radio" default="1" label="COM_BINGTRANSLATE_FIELD_LOAD_JQUERY" description="COM_BINGTRANSLATE_LOAD_JQUERY">
+            <field name="load_jquery" type="radio" default="1" class="btn-group"
+                   label="COM_BINGTRANSLATE_FIELD_LOAD_JQUERY"
+                   description="COM_BINGTRANSLATE_LOAD_JQUERY">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
-            <field name="backend_feed" type="radio" default="1" label="COM_BINGTRANSLATE_FIELD_BACKEND_FEED" description="COM_BINGTRANSLATE_FIELD_BACKEND_FEED_DESC">
+            <field name="bork" type="radio" default="0" class="btn-group"
+                   label="COM_BINGTRANSLATE_FIELD_BORK"
+                   description="COM_BINGTRANSLATE_FIELD_BORK_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field name="backend_feed" type="radio" default="1" class="btn-group"
+                   label="COM_BINGTRANSLATE_FIELD_BACKEND_FEED"
+                   description="COM_BINGTRANSLATE_FIELD_BACKEND_FEED_DESC">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
