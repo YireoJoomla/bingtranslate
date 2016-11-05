@@ -9,9 +9,9 @@
  */
 
 // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
-jimport( 'joomla.plugin.plugin' );
+jimport('joomla.plugin.plugin');
 
 /**
  * Bing Translate System Plugin
@@ -20,123 +20,199 @@ class plgSystemBingTranslate extends JPlugin
 {
 	/**
 	 * Event onAfterRender
-	 *
-	 * @param null
-	 * @return null
 	 */
 	public function onBeforeRender()
 	{
-		if($this->allow() == false)
+		if ($this->allowJavaScript() == false)
 		{
-			return false;
+			return;
 		}
 
-		// Add the proper JavaScript to this document
 		JHtml::_('jquery.framework');
+
 		$document = JFactory::getDocument();
-		$document->addScript(JURI::base().'../media/com_bingtranslate/js/system.js');
-		//$document->addStyleSheet(JURI::base().'../media/com_bingtranslate/css/system.css');
+		$document->addScript(JURI::base() . '../media/com_bingtranslate/js/system.js');
+		$document->addStyleSheet(JURI::base() . '../media/com_bingtranslate/css/system.css');
 	}
 
-    /**
-     * Event onAfterRender
-     *
-     * @param null
-     * @return null
-     */
-    public function onAfterRender()
-    {
-        if($this->allow() == false)
+	/**
+	 * Event onAfterRender
+	 */
+	public function onAfterRender()
+	{
+		if ($this->allowTagReplacement() == false)
 		{
-			return false;
+			return;
 		}
 
-        // Get the body and fetch a list of files
-        $body = JResponse::getBody();
+		// Get the body and fetch a list of files
+		$body = JResponse::getBody();
 
-        if(preg_match_all('/\<input([^\>]+)\>/', $body, $matches)) {
-            foreach($matches[0] as $matchIndex => $inputTag) {
-                if(preg_match('/type=\"([^\"]+)/', $inputTag, $matchType) == false) {
-                    continue;
-                }
+		if (preg_match_all('/\<input([^\>]+)\>/', $body, $matches))
+		{
+			$replacedTags = array();
 
-                $type = $matchType[1];
-                if(in_array($type, $this->getAllowedTypes()) == false) {
-                    continue;
-                }
+			foreach ($matches[0] as $matchIndex => $inputTag)
+			{
+				$inputTagHash = md5($inputTag);
 
-                $inputId = null;
+				if (in_array($inputTagHash, $replacedTags))
+				{
+					continue;
+				}
 
-                if(preg_match('/id=\"([^\"]+)/', $inputTag, $matchType)) {
-                    $inputId = 'input#'.$matchType[1];
-                } elseif(preg_match('/name=\"([^\"]+)/', $inputTag, $matchType)) {
-                    $inputId = 'input[name=\''.$matchType[1].'\']';
-                }
-                
-                if(empty($inputId)) {
-                    return null;
-                }
+				$replacementTag = $this->getInputReplacement($inputTag);
 
-                $inputScript = 'javascript:doBingTranslate(\''.$inputId.'\', \'\', null);';
-                $inputScript .= 'return false;';
-                $inputHtml = array();
-                $inputHtml[] = '<div class="input-append">';
-                $inputHtml[] = $inputTag;
-                $inputHtml[] = '<span class="add-on">';
-                $inputHtml[] = '<a href="#" onclick="'.$inputScript.'"><i class="icon-copy"></i></a>';
-                $inputHtml[] = '</span>';
-                $inputHtml[] = '</div>';
-                
-                //$body = str_replace($inputTag, implode('', $inputHtml), $body);
-            }
-        }
+				if (!empty($replacementTag))
+				{
+					$body = str_replace($inputTag, $replacementTag, $body);
+					$replacedTags[] = $inputTagHash;
+				}
+			}
+		}
 
-        JResponse::setBody($body);
-    }
+		JResponse::setBody($body);
+	}
 
-	protected function allow()
+	/**
+	 * @param string $inputTag
+	 *
+	 * @return null|string
+	 */
+	protected function getInputReplacement($inputTag)
+	{
+		if (preg_match('/type=\"([^\"]+)/', $inputTag, $matchType) == false)
+		{
+			return null;
+		}
+
+		$type = $matchType[1];
+
+		if (in_array($type, $this->getAllowedTypes()) == false)
+		{
+			return null;
+		}
+
+		$inputId = null;
+		$inputScript = null;
+
+		if (preg_match('/id=\"([^\"]+)/', $inputTag, $matchType))
+		{
+			$inputId = 'input#' . $matchType[1];
+			$inputScript = 'javascript:doBingTranslate(\'' . $inputId . '\', \'\');';
+			$inputScript .= 'return false;';
+		}
+		elseif (preg_match('/name=\"([^\"]+)/', $inputTag, $matchType))
+		{
+			$inputName = $matchType[1];
+			$inputScript = 'javascript:doBingTranslateByName(\'' . $inputName . '\', \'\');';
+			$inputScript .= 'return false;';
+		}
+
+		if (empty($inputName) && empty($inputId))
+		{
+			return null;
+		}
+
+		$inputHtml = array();
+		$inputHtml[] = '<div class="input-append">';
+		$inputHtml[] = $inputTag;
+		$inputHtml[] = '<span class="add-on">';
+		$inputHtml[] = '<a title="BingTranslate" href="#" onclick="' . $inputScript . '"><i class="icon-copy"></i></a>';
+		$inputHtml[] = '</span>';
+		$inputHtml[] = '</div>';
+
+		return implode('', $inputHtml);
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function allowJavaScript()
 	{
 		// Fetch variables
 		$app = JFactory::getApplication();
 		$jinput = $app->input;
+		$task = $jinput->getCmd('task');
 		$view = $jinput->getCmd('view');
-		$layout = $jinput->getCmd('layout');
 
 		// Check for the current view
-		if(in_array($view, $this->getAllowedViews()) == false) {
+		if (in_array($task, $this->getAllowedTasks()))
+		{
 			return false;
 		}
 
-		// Check for the current layout
-		if(in_array($layout, $this->getAllowedLayouts()) == false) {
+		// Check for the current view
+		if (!in_array($view, $this->getAllowedViews()))
+		{
 			return false;
 		}
 
 		return true;
 	}
 
-    protected function getAllowedTypes()
-    {
-        return array(
-            'text',
-        );
-    }
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
+	protected function allowTagReplacement()
+	{
+		// Fetch variables
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
+		$task = $jinput->getCmd('task');
 
-    protected function getAllowedViews()
-    {
-        return array(
-            'module',
-            'category',
-            'article',
-            'item',
-        );
-    }
+		// Check for the current view
+		if (in_array($task, $this->getAllowedTasks()))
+		{
+			return true;
+		}
 
-    protected function getAllowedLayouts()
-    {
-        return array(
-            'edit',
-            'form',
-        );
-    }
+		return false;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getAllowedTypes()
+	{
+		return array(
+			'text',
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getAllowedTasks()
+	{
+		return array(
+			'translate.edit',
+			'translate.apply',
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getAllowedViews()
+	{
+		return array(
+			'module',
+			'category',
+			'article',
+			'item',
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getAllowedLayouts()
+	{
+		return array(
+			'edit',
+			'form',
+		);
+	}
 }

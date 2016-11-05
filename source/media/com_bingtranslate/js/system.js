@@ -7,8 +7,8 @@
  * @link http://www.yireo.com
  */
 
-jQuery(function() {
-    jQuery("input").each(function() {
+jQuery(function () {
+    jQuery("input").each(function () {
         addButtonToInput(jQuery(this));
     });
 });
@@ -18,38 +18,43 @@ var skipInputNames = ['alias', 'publish_up', 'publish_down', 'created', 'created
     'id', 'xreference', 'metadata_author', 'metadata_xreference', 'images_image_intro', 'images_image_fulltext',
     'treeselectfilter', 'params_cache_time', 'params_header_class'];
 
-function addButtonToInput(input)
-{
+function addButtonToInput(input) {
     var inputId = input.attr('id');
     var inputName = input.attr('name');
     var inputType = input.attr('type');
 
-    if(inputName == undefined) {
+    if (inputName == undefined) {
         return false;
     }
 
-    if(inputId == undefined) {
+    if (inputId == undefined) {
         return false;
     }
 
-    if(input.attr('disabled') == 'disabled' || input.prop('readonly')) {
+    if (input.attr('disabled') == 'disabled' || input.prop('readonly')) {
         return false;
     }
 
-    if(inArray(inputName, skipInputNames) || inArray(inputId, skipInputNames)) {
+    if (inArray(inputName, skipInputNames) || inArray(inputId, skipInputNames)) {
         return true;
     }
 
-    if(inArray(inputType, allowedInputTypes) == false) {
+    if (inArray(inputType, allowedInputTypes) == false) {
         return false;
     }
 
     var parent = input.parent();
-    if(parent.hasClass('input-append') == false) {
+    var addonStyle = null;
+
+    if (input.hasClass('input-xxlarge')) {
+        addonStyle = 'height:auto; line-height:22px;';
+    }
+
+    if (parent.hasClass('input-append') == false) {
         var html = '<div class="input-append">'
             + input.prop('outerHTML')
-            + '<span class="add-on bingtranslate-add-on">'
-            + '<a href="#" title="BingTranslate" onclick="javascript:doBingTranslate(\'#' + inputId + '\', null); return false;">'
+            + '<span class="add-on bingtranslate-add-on" style="' + addonStyle + '">'
+            + '<a href="#" title="BingTranslate" onclick="javascript:doBingTranslate(\'#' + inputId + '\'); return false;">'
             + '<i class="icon-copy"></i>'
             + '</a>'
             + '</span>'
@@ -57,8 +62,8 @@ function addButtonToInput(input)
 
     } else {
         var html = input.html()
-            + '<span class="add-on bingtranslate-add-on">'
-            + '<a href="#" title="BingTranslate" onclick="javascript:doBingTranslate(\'#' + inputId + '\', null); return false;">'
+            + '<span class="add-on bingtranslate-add-on" style="' + addonStyle + '">'
+            + '<a href="#" title="BingTranslate" onclick="javascript:doBingTranslate(\'#' + inputId + '\'); return false;">'
             + '<i class="icon-copy"></i>'
             + '</a>'
             + '</span>';
@@ -70,20 +75,18 @@ function addButtonToInput(input)
     return true;
 }
 
-function inArray(name, array)
-{
+function inArray(name, array) {
     var count = array.length;
-    for(var i = 0; i < count; i++)
-    {
-        if(array[i] === name ) {
+    for (var i = 0; i < count; i++) {
+        if (array[i] === name) {
             return true;
         }
 
-        if('jform_' + array[i] === name ) {
+        if ('jform_' + array[i] === name) {
             return true;
         }
 
-        if('params_' + array[i] === name ) {
+        if ('params_' + array[i] === name) {
             return true;
         }
     }
