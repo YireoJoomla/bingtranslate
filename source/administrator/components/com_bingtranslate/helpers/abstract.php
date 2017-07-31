@@ -3,7 +3,7 @@
  * Joomla! component BingTranslate
  *
  * @author Yireo (info@yireo.com)
- * @copyright Copyright 2015
+ * @copyright Copyright 2017
  * @license GNU Public License
  * @link http://www.yireo.com
  */
@@ -18,6 +18,8 @@ class HelperAbstract
 {
     /**
      * Structural data of this component
+     *
+     * @return array
      */
     static public function getStructure()
     {

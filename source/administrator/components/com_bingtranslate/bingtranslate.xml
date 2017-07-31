@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="2.5" method="upgrade">
+<extension type="component" version="3.7" method="upgrade">
     <name>COM_BINGTRANSLATE</name>
     <author>Yireo</author>
     <authoremail>support@yireo.com</authoremail>
     <authorurl>http://www.yireo.com</authorurl>
-    <creationDate>January 2015</creationDate>
-    <copyright>Copyright 2015 Yireo.com. All rights reserved.</copyright>
+    <creationDate>July 2017</creationDate>
+    <copyright>Copyright 2017 Yireo.com. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <description>COM_BINGTRANSLATE_DESC</description>
 
     <administration>
@@ -19,9 +19,11 @@
             <filename>config.xml</filename>
             <filename>controller.php</filename>
             <filename>index.html</filename>
-            <folder>lib</folder>
-            <folder>views</folder>
             <folder>helpers</folder>
+            <folder>lib</folder>
+            <folder>libraries</folder>
+            <folder>models</folder>
+            <folder>views</folder>
         </files>
 
         <languages folder="admin/language">

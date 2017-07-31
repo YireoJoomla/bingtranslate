@@ -2,8 +2,7 @@
 <config>
     <fields>
 	    <fieldset name="basic">
-		    <field name="client_id" type="text" default="" label="COM_BINGTRANSLATE_FIELD_CLIENT_ID" description="COM_BINGTRANSLATE_FIELD_CLIENT_ID_DESC" size="64" />
-    		<field name="client_secret" type="text" default="" label="COM_BINGTRANSLATE_FIELD_CLIENT_SECRET" description="COM_BINGTRANSLATE_FIELD_CLIENT_SECRET_DESC" size="64" />
+		    <field name="client_key" type="text" default="" label="COM_BINGTRANSLATE_FIELD_CLIENT_KEY" description="COM_BINGTRANSLATE_FIELD_CLIENT_KEY_DESC" size="64" />
         </fieldset>
         <fieldset name="advanced">
             <field name="load_jquery" type="radio" default="1" class="btn-group"

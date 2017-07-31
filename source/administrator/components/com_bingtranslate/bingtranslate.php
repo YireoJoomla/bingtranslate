@@ -4,9 +4,9 @@
  *
  * @author Yireo
  * @package BingTranslate
- * @copyright Copyright 2015
+ * @copyright Copyright 2017
  * @license GNU Public License
- * @link http://www.yireo.com/
+ * @link https://www.yireo.com/
  */
 
 // No direct access
