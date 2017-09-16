@@ -90,7 +90,7 @@ class Bork implements HandlerInterface
             }
 
             if (empty($text)) {
-                $text = $orgText;
+                $text = $orgtext;
             }
 
             $newTextBlocks[] = (string)$text;

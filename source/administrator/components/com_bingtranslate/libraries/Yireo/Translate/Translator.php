@@ -43,6 +43,11 @@ class Translator
      */
     protected $params = [];
 
+	/**
+	 * @var Session
+	 */
+    protected $sessionObject;
+
     /**
      * Translator constructor.
      *
@@ -84,7 +89,7 @@ class Translator
         $handlerClass = (string) $this->params['handler'];
 
         /** @var HandlerInterface $handler */
-        $handler = new $handlerClass($this->text, $this->toLanguage, $this->fromLanguage, $this->params);
+        $handler = new $handlerClass($this->text, $this->toLanguage, $this->fromLanguage, $this->params, $this->sessionObject);
         $translatedText = $handler->translate();
         $this->setTranslatedText($translatedText);
 
@@ -142,5 +147,13 @@ class Translator
     public function setParams($params)
     {
         $this->params = $params;
+    }
+
+	/**
+	 * @param Session $sessionObject
+	 */
+    public function setSessionObject(Session $sessionObject)
+    {
+    	$this->sessionObject = $sessionObject;
     }
 }

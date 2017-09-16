@@ -8,6 +8,8 @@
 
 namespace Yireo\Translate\Api;
 
+use Yireo\Translate\Session;
+
 /**
  * Handler interface
  */
@@ -20,8 +22,9 @@ interface HandlerInterface
      * @param string $toLanguage
      * @param string $fromLanguage
      * @param array $params
+     * @param Session $session
      */
-    public function __construct($text, $toLanguage, $fromLanguage = '', $params = []);
+    public function __construct($text, $toLanguage, $fromLanguage = '', $params = [], Session $session);
 
     /**
      * @return string

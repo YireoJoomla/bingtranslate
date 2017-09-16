@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Joomla! Editor Button Plugin - Bing Translate
  *
- * @author Yireo (info@yireo.com)
- * @copyright Copyright 2015
+ * @author Yireo <info@yireo.com>
+ * @copyright Copyright 2017
  * @license GNU Public License
- * @link http://www.yireo.com
+ * @link https://www.yireo.com
  */
 
 // No direct access
@@ -28,8 +28,8 @@ class PlgButtonBingTranslate extends JPlugin
 		// Add the proper JavaScript to this document
 		JHtml::_('jquery.framework');
 		$document = JFactory::getDocument();
-		$document->addScript(JURI::base() . '../media/com_bingtranslate/js/editor-xtd.js');
-		$document->addStyleSheet(JURI::base() . '../media/com_bingtranslate/css/editor-xtd.css');
+		$document->addScript(JUri::base() . '../media/com_bingtranslate/js/editor-xtd.js');
+		$document->addStyleSheet(JUri::base() . '../media/com_bingtranslate/css/editor-xtd.css');
 
 		// Detect the language
 		$lang = null;
@@ -39,7 +39,7 @@ class PlgButtonBingTranslate extends JPlugin
 		$button->set('modal', false);
 		$button->set('onclick', 'javascript:doBingTranslate(\'' . $name . '\', \'' . $lang . '\', this);return false;');
 		$button->set('class', 'btn');
-		$button->set('text', 'Bing Translate');
+		$button->set('text', JText::_('Bing Translate'));
 		$button->set('name', 'copy');
 		$button->set('link', '#');
 

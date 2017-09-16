@@ -2,7 +2,7 @@
 <extension version="2.5" type="plugin" group="system" method="upgrade">
     <name>PLG_SYSTEM_BINGTRANSLATE</name>
     <author>Yireo</author>
-    <creationDate>January 2015</creationDate>
+    <creationDate>August 2017</creationDate>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <authorEmail>info@yireo.com</authorEmail>
     <authorUrl>http://www.yireo.com/</authorUrl>

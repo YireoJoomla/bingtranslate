@@ -54,17 +54,18 @@ class BingTranslateModelTranslator extends YireoAbstractModel
 
 		// Setup the parameters
 		$params            = [];
-		$params['handler'] = '\\Yireo\\Translate\\Handler\\MicrosoftTranslate';
+		$params['handler'] = \Yireo\Translate\Handler\MicrosoftTranslate::class;
 		$params['key']     = $this->clientKey;
 		$params['session'] = true;
 
 		// Bork debugging
 		if ($this->useBork)
 		{
-			$params['handler'] = '\\Yireo\\Translate\\Handler\\Bork';
+			$params['handler'] = \Yireo\Translate\Handler\Bork::class;
 		}
 
 		$translator = new \Yireo\Translate\Translator();
+		$translator->setSessionObject(new \Yireo\Translate\Session\Joomla);
 		$translator->setParams($params);
 		$translator->setFromLanguage($fromLang);
 		$translator->setToLanguage($toLang);

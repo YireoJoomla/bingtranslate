@@ -4,10 +4,10 @@
     <author>Yireo</author>
     <authoremail>support@yireo.com</authoremail>
     <authorurl>http://www.yireo.com</authorurl>
-    <creationDate>July 2017</creationDate>
+    <creationDate>August 2017</creationDate>
     <copyright>Copyright 2017 Yireo.com. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <description>COM_BINGTRANSLATE_DESC</description>
 
     <administration>

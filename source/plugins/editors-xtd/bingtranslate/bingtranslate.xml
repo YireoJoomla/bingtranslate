@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="editors-xtd" method="upgrade">
+<extension version="3.7" type="plugin" group="editors-xtd" method="upgrade">
     <name>PLG_EDITORS-XTD_BINGTRANSLATE</name>
     <author>Yireo</author>
-    <creationDate>January 2015</creationDate>
+    <creationDate>August 2017</creationDate>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <authorEmail>info@yireo.com</authorEmail>
     <authorUrl>http://www.yireo.com/</authorUrl>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <description>PLG_EDITORS-XTD_BINGTRANSLATE_DESC</description>
 
     <files>

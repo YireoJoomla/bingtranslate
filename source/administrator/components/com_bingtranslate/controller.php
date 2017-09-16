@@ -72,11 +72,17 @@ class BingTranslateController extends YireoController
 		$translator = $this->getModel('translator');
 		$translator->setClientKey($clientKey);
 		$translator->setUseBork($useBork);
-		$translation = $translator->translate($text, $toLang, $fromLang);
+
+		try {
+			$translation = $translator->translate($text, $toLang, $fromLang);
+		} catch(Exception $e) {
+			return $this->response($e->getMessage(), false);
+		}
+
 
 		if (empty($translation))
 		{
-			$this->response(JText::_('No response from Bing'), false);
+			return $this->response(JText::_('No response from Bing'), false);
 		}
 
 		return $this->response($translation);

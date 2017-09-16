@@ -13,6 +13,7 @@ use Yireo\Translate\Exception\InvalidHtml;
 use Yireo\Translate\Exception\TooManyCharacters;
 use Yireo\Translate\Exception\EmptyToken;
 use Yireo\Translate\Client\Curl as CurlClient;
+use Yireo\Translate\Session;
 
 /**
  * MicrosoftTranslate class
@@ -54,6 +55,11 @@ class MicrosoftTranslate implements HandlerInterface
      */
     protected $params = [];
 
+	/**
+	 * @var Session
+	 */
+	protected $session;
+
     /**
      * Translator constructor.
      *
@@ -62,12 +68,13 @@ class MicrosoftTranslate implements HandlerInterface
      * @param string $fromLanguage
      * @param array $params
      */
-    public function __construct($text, $toLanguage, $fromLanguage = '', $params = [])
+    public function __construct($text, $toLanguage, $fromLanguage = '', $params = [], Session $session)
     {
         $this->text = $text;
         $this->toLanguage = $toLanguage;
         $this->fromLanguage = $fromLanguage;
         $this->params = $params;
+        $this->session = $session;
 
         if (empty($this->params)) {
             throw new \InvalidArgumentException('Empty parameters');
@@ -92,7 +99,7 @@ class MicrosoftTranslate implements HandlerInterface
             throw new TooManyCharacters('Text can not be more than 10.000 characters');
         }
 
-        $token = new MicrosoftTranslate\Token($this->params);
+        $token = new MicrosoftTranslate\Token($this->params, $this->session);
 
         if (empty($token)) {
             throw new EmptyToken('Received empty token');
